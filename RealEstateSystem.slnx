@@ -1,14 +1,15 @@
 <Solution>
-  <Folder Name="/1Domain/">
-    <Project Path="Domain/Domain/Domain.csproj" />
+  <Folder Name="/Src/" />
+  <Folder Name="/Src/Application/">
+    <Project Path="../../../../../../Source/Repos/RealEstateSystem/Application/Application/Application.csproj" />
   </Folder>
-  <Folder Name="/2Application/">
-    <Project Path="Application/Application/Application.csproj" />
+  <Folder Name="/Src/Domain/">
+    <Project Path="../../../../../../Source/Repos/RealEstateSystem/Domain/Domain/Domain.RealEstate.csproj" />
   </Folder>
-  <Folder Name="/3Infrastructure/">
-    <Project Path="Infrastructure/Infrastructure/Infrastructure.csproj" />
+  <Folder Name="/Src/EndPoints/">
+    <Project Path="../../../../../../Source/Repos/RealEstateSystem/Presentation/EndPoint_MVC/RealState.MVC.csproj" />
   </Folder>
-  <Folder Name="/4Presentation/">
-    <Project Path="Presentation/EndPoint_MVC/EndPoint_MVC.csproj" />
+  <Folder Name="/Src/Infrastructure/">
+    <Project Path="../../../../../../Source/Repos/RealEstateSystem/Infrastructure/Infrastructure/Infrastructure.csproj" />
   </Folder>
 </Solution>
