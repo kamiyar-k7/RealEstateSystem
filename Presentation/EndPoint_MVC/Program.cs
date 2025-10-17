@@ -1,4 +1,5 @@
 using Infrastructure.AppDbContext;
+using Infrastructure.ServiceRegistration;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,12 +7,15 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+#region Services
+builder.Services.AddInfrastructureServices(builder.Configuration);
+
+#endregion
+
 var app = builder.Build();
 
 
 
-builder.Services.AddDbContext<RealEstateDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
 // Configure the HTTP request pipeline.
