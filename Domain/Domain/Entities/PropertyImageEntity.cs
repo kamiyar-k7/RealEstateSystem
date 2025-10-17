@@ -1,7 +1,7 @@
 ﻿
 namespace Domain.Entities.ProperetyEntities;
 
-public class PropertyImageEntity
+public class PropertyImageEntity 
 {
 
     public Guid Id { get; set; }
@@ -9,5 +9,9 @@ public class PropertyImageEntity
 
     public Guid PropertyId { get; set; }
 
+    #region Rels
+
     public PropertyEntity Property { get; set; }
+    #endregion
+
 }
