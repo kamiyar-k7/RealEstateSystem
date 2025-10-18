@@ -1,4 +1,5 @@
 ﻿
+using Application.DataBaseContextInterface;
 using Infrastructure.AppDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -13,9 +14,11 @@ public static class InfrastructureServices
     {
 
         services.AddDbContext<RealEstateDataBaseContext>(options =>
-            options.UseSqlServer(configuration.GetConnectionString("RealStateDbConnectionString")));
+            options.UseSqlServer(configuration.GetConnectionString("RealEstateDbConnectionString")));
 
 
+        services.AddScoped<IRealEstateDataBaseContext>(provider =>
+            provider.GetRequiredService<RealEstateDataBaseContext>());
 
         return services;
     }

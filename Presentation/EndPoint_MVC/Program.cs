@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 #region Services
+
 builder.Services.AddInfrastructureServices(builder.Configuration);
 
 #endregion
