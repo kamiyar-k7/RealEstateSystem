@@ -1,13 +1,14 @@
 ﻿
-using Application.DataBaseContextInterface;
+using Domain.IRepository;
 using Infrastructure.AppDbContext;
+using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Infrastructure.ServiceRegistration;
+namespace Infrastructure.Configuration;
 
-public static class InfrastructureServices
+public static class InfrastructureConfiguration
 {
 
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
@@ -17,8 +18,10 @@ public static class InfrastructureServices
             options.UseSqlServer(configuration.GetConnectionString("RealEstateDbConnectionString")));
 
 
-        services.AddScoped<IRealEstateDataBaseContext>(provider =>
-            provider.GetRequiredService<RealEstateDataBaseContext>());
+
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IRoleRepository, RoleRepository>();
+
 
         return services;
     }

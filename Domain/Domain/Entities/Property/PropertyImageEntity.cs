@@ -1,5 +1,4 @@
-﻿
-namespace Domain.Entities.ProperetyEntities;
+﻿namespace Domain.Entities.Property;
 
 public class PropertyImageEntity 
 {
