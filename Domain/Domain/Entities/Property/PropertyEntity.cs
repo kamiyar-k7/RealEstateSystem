@@ -1,6 +1,6 @@
-﻿using Domain.Identity.Entities;
+﻿using Domain.Entities.Identity;
 
-namespace Domain.Entities.ProperetyEntities;
+namespace Domain.Entities.Property;
 
 public class PropertyEntity : BaseEntity
 {
@@ -23,14 +23,12 @@ public class PropertyEntity : BaseEntity
     public List<PropertyImageEntity> PropertyImages { get; set; } = new();
     public ApplicationUser ApplicationUser { get; set; }
 
+    // city and stater in future
+
     #endregion
 
 
 
-    //Owner Details
-    //public guid ownerid
-    //Public string OwnerName
-    //Public long OwnerPhone
 }
 
 
