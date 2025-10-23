@@ -22,6 +22,11 @@ public static class InfrastructureConfiguration
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IRoleRepository, RoleRepository>();
 
+        services.AddScoped<IPropertyRepository, PropertyRepository>();
+        services.AddScoped<IProvinceRepository, ProvinceRepository>();
+        services.AddScoped<ICityRepository , CityRepository>();
+
+        services.AddScoped<IBlogRepository, BlogRepository>();
 
         return services;
     }

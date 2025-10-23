@@ -16,6 +16,10 @@ public class RoleServices : IRoleServices
     {
         _repository = repository;
     }
+    #endregion
+
+    #region General
+
 
     public async Task AddRole(RoleDto role)
     {
@@ -98,6 +102,8 @@ public class RoleServices : IRoleServices
         await _repository.UpdateRole(mappedRole);
 
     }
+
+
     public async Task DeleteRoleAsync(long id)
     {
         var role = await _repository.GetRoleById(id);
@@ -112,11 +118,19 @@ public class RoleServices : IRoleServices
 
     }
 
-
-
- 
     #endregion
 
-  
+
+    #region AdminSide
+
+
+    public async Task ChangeUserRole(Guid userId)
+    {
+      
+
+    }
+
+    #endregion
+
 
 }

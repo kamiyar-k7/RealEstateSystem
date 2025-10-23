@@ -1,9 +1,9 @@
 ﻿
 namespace Domain.Entities.Location;
 
-public class ProvinceEntity : BaseEntity
+public class ProvinceEntity 
 {
-
+    public Guid Id { get; set; }
     public string Name { get; set; }
 
 

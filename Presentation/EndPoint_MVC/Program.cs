@@ -1,18 +1,19 @@
 using Application.Configuration;
-using Infrastructure.AppDbContext;
 using Infrastructure.Configuration;
-using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
+
 
 #region Services
+builder.Services.AddControllersWithViews();
 
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddApplicationServcies();
+
 #endregion
+
 
 var app = builder.Build();
 

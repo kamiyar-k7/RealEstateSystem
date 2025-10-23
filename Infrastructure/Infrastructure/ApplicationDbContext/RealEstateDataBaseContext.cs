@@ -26,7 +26,7 @@ public class RealEstateDataBaseContext : IdentityDbContext<ApplicationUser, Appl
     //location
 
     public DbSet<CityEntity> City { get; set; }
-    public DbSet<ProvinceEntity> province { get; set; }
+    public DbSet<ProvinceEntity> Province { get; set; }
 
 
     // blog

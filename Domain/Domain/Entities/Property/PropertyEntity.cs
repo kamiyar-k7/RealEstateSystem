@@ -20,22 +20,26 @@ public class PropertyEntity : BaseEntity
     #region rels
 
 
-    public Guid UserId { get; set; }
-    public ApplicationUser User { get; set; }
+    public Guid OwnerId { get; set; }
+    public string OwnerFullName { get; set; }
+    public ApplicationUser Owner { get; set; }
 
 
     public List<PropertyImageEntity> PropertyImages { get; set; } = new();
 
     public Guid PropertyTypeId { get; set; }
+    public string PropertyTypeName{ get; set; }
     public PropertyTypeEntity PropertyType { get; set; }
 
 
     // city and province 
     public Guid CityId { get; set; }
+    public string CityName { get; set; }
     public CityEntity City { get; set; }
 
 
     public Guid provinceId { get; set; }
+    public string ProvinceName { get; set; }
     public ProvinceEntity Province { get; set; }
 
     #endregion
