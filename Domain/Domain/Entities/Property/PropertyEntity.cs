@@ -1,16 +1,15 @@
 ﻿using Domain.Entities.Identity;
+using Domain.Entities.Location;
 
 namespace Domain.Entities.Property;
 
 public class PropertyEntity : BaseEntity
 {
 
-    //Base info
+    // info
     public string Title { get; set; }
 
     public string Description { get; set; }
-
-    public PropertyType Type { get; set; }
 
 
     // for map view
@@ -20,10 +19,24 @@ public class PropertyEntity : BaseEntity
 
     #region rels
 
-    public List<PropertyImageEntity> PropertyImages { get; set; } = new();
-    public ApplicationUser ApplicationUser { get; set; }
 
-    // city and stater in future
+    public Guid UserId { get; set; }
+    public ApplicationUser User { get; set; }
+
+
+    public List<PropertyImageEntity> PropertyImages { get; set; } = new();
+
+    public Guid PropertyTypeId { get; set; }
+    public PropertyTypeEntity PropertyType { get; set; }
+
+
+    // city and province 
+    public Guid CityId { get; set; }
+    public CityEntity City { get; set; }
+
+
+    public Guid provinceId { get; set; }
+    public ProvinceEntity Province { get; set; }
 
     #endregion
 
@@ -32,16 +45,7 @@ public class PropertyEntity : BaseEntity
 }
 
 
-public enum PropertyType
-{
-    Apartamant = 0,
-    Villa = 1,
-    Office = 2,
-    Shop = 3,
-    Land = 4,
-    Penthouse = 5 ,
 
-}
 
 
 
