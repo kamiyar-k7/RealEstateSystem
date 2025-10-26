@@ -1,6 +1,5 @@
 ﻿
 
-
 using Domain.Entities.Blog;
 using Domain.Entities.Identity;
 using Domain.Entities.Location;
@@ -10,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.AppDbContext;
 
-public class RealEstateDataBaseContext : IdentityDbContext<ApplicationUser, ApplicationRole, long>
+public class RealEstateDataBaseContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
 {
     public RealEstateDataBaseContext(DbContextOptions<RealEstateDataBaseContext> options) : base(options)
     {
@@ -24,15 +23,13 @@ public class RealEstateDataBaseContext : IdentityDbContext<ApplicationUser, Appl
 
 
     //location
-
     public DbSet<CityEntity> City { get; set; }
     public DbSet<ProvinceEntity> Province { get; set; }
 
 
     // blog
     public DbSet<BlogEntity> Blog { get; set; }
-
-
+    public DbSet<BlogCategoryEntity> BlogCategory {  get; set; }
 
 
 }

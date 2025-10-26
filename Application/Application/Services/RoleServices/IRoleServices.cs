@@ -1,4 +1,4 @@
-﻿using Application.Dtos;
+﻿using Application.Dtos.IdentityDtos;
 using Domain.Entities.Identity;
 
 namespace Application.Services.RoleServices;
@@ -7,11 +7,11 @@ public interface IRoleServices
 {
     Task<List<RoleDto>> GetRolesAsync();
 
-    Task<RoleDto> GetRoleByIdAsync(long id);
+    Task<RoleDto> GetRoleByIdAsync(Guid id);
 
     Task AddRole(RoleDto role);
 
-    Task DeleteRoleAsync(long id);
+    Task DeleteRoleAsync(Guid id);
 
     Task UpdateRoleAsync(RoleDto role);
 

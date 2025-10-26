@@ -1,8 +1,6 @@
-﻿
+﻿using Domain.Entities.Location;
 
-using Domain.Entities.Location;
-
-namespace Domain.IRepository;
+namespace Domain.IRepository.LocationIRepositories;
 
 public interface IProvinceRepository
 {

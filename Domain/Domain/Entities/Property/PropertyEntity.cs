@@ -3,7 +3,7 @@ using Domain.Entities.Location;
 
 namespace Domain.Entities.Property;
 
-public class PropertyEntity : BaseEntity
+public class PropertyEntity : BaseEntity , IDeleteEntity
 {
 
     // info
@@ -17,9 +17,13 @@ public class PropertyEntity : BaseEntity
     public double Longitude { get; set; }
 
 
+
+    public bool IsDeleted { get ; set ; }
+
+
     #region rels
 
-
+    // user releation
     public Guid OwnerId { get; set; }
     public string OwnerFullName { get; set; }
     public ApplicationUser Owner { get; set; }
@@ -27,12 +31,14 @@ public class PropertyEntity : BaseEntity
 
     public List<PropertyImageEntity> PropertyImages { get; set; } = new();
 
+
+    // type relation
     public Guid PropertyTypeId { get; set; }
     public string PropertyTypeName{ get; set; }
     public PropertyTypeEntity PropertyType { get; set; }
 
 
-    // city and province 
+    // city and province  relations
     public Guid CityId { get; set; }
     public string CityName { get; set; }
     public CityEntity City { get; set; }
@@ -41,6 +47,7 @@ public class PropertyEntity : BaseEntity
     public Guid provinceId { get; set; }
     public string ProvinceName { get; set; }
     public ProvinceEntity Province { get; set; }
+  
 
     #endregion
 

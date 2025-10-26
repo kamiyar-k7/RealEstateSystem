@@ -2,7 +2,7 @@
 
 using Application.Dtos.LcoationDtos;
 using Domain.Entities.Location;
-using Domain.IRepository;
+using Domain.IRepository.LocationIRepositories;
 
 namespace Application.Services.ProvinceServices;
 

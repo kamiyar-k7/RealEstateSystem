@@ -1,10 +1,10 @@
 ﻿
 using Domain.Entities.Location;
-using Domain.IRepository;
+using Domain.IRepository.LocationIRepositories;
 using Infrastructure.AppDbContext;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repositories;
+namespace Infrastructure.Repositories.LocationRepositories;
 
 public  class CityRepository : ICityRepository
 {

@@ -19,12 +19,14 @@ public static class ApplicationConfiguration
         services.AddScoped<IRoleServices, RoleServices>();
 
 
-        services.AddScoped<IPropertyServices, PropertyService>();
+       // services.AddScoped<IPropertyServices, PropertyService>();
+        services.AddScoped<IPropertyTypeServices ,  PropertyTypeServices>();
         services.AddScoped<ICityServices, CityServices>();
         services.AddScoped<IProvinceServices, ProvinceServices>();
 
 
         services.AddScoped<IBlogServices , BlogServices>();
+        services.AddScoped<IBlogCategoryServices, BlogCategoryServices>();
 
 
         return services;

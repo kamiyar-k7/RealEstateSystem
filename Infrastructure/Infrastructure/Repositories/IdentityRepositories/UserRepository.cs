@@ -1,10 +1,11 @@
 ﻿
 using Domain.Entities.Identity;
-using Domain.IRepository;
+using Domain.IRepository.IdentityIRepositories;
 using Infrastructure.AppDbContext;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repositories;
+namespace Infrastructure.Repositories.IdentityRepositories;
 
 public class UserRepository : IUserRepository
 {
@@ -25,23 +26,23 @@ public class UserRepository : IUserRepository
 
     public async Task SaveChangesAsync()
     {
-        await _context.SaveChangesAsync();  
+        await _context.SaveChangesAsync();
     }
 
-    public async Task<ApplicationUser> GetUserById(long id)
+    public async Task<ApplicationUser> GetUserById(Guid id)
     {
-        return await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
-        
+        return await _context.Users.FindAsync(id);
+
     }
 
     public async Task<List<ApplicationUser>> GetListOfUsers()
     {
-        return await _context.Users.ToListAsync() ?? new List<ApplicationUser>() ;
+        return await _context.Users.ToListAsync() ?? new List<ApplicationUser>();
     }
 
     public async Task AddUser(ApplicationUser user)
     {
-        
+
         await _context.Users.AddAsync(user);
         await SaveChangesAsync();
     }
@@ -52,14 +53,15 @@ public class UserRepository : IUserRepository
         await SaveChangesAsync();
     }
 
-    public async Task RemoveUser(ApplicationUser user) 
+    public async Task RemoveUser(Guid id)
     {
 
-        _context.Users.Remove(user);
+        await _context.Users.Where(u => u.Id == id).ExecuteDeleteAsync();
         await SaveChangesAsync();
     }
 
 
     #endregion
 
+    
 }

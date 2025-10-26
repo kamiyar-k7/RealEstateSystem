@@ -1,4 +1,4 @@
-﻿using Application.Dtos;
+﻿using Application.Dtos.IdentityDtos;
 using Domain.Entities.Identity;
 
 namespace Application.Services.UserServices;
@@ -8,11 +8,11 @@ public interface IUserServices
 
     Task<List<UserDto>> GetUsersAsync();
 
-    Task<UserDto> GetUserByIdAsync(int id);
+    Task<UserDto> GetUserByIdAsync(Guid id);
 
     Task AddUser(UserDto user);
 
-    Task DeleteUserAsync(int id);
+    Task DeleteUserAsync(Guid  id);
 
     Task UpdateUserAsync(UserDto user);
 

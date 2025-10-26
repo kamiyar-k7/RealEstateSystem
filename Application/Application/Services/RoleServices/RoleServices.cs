@@ -1,7 +1,7 @@
-﻿
-using Application.Dtos;
+﻿using Application.Dtos.IdentityDtos;
 using Domain.Entities.Identity;
-using Domain.IRepository;
+using Domain.IRepository.IdentityIRepositories;
+using Microsoft.AspNetCore.Identity;
 
 
 namespace Application.Services.RoleServices;
@@ -36,7 +36,7 @@ public class RoleServices : IRoleServices
     }
 
 
-    public async Task<RoleDto> GetRoleByIdAsync(long id)
+    public async Task<RoleDto> GetRoleByIdAsync(Guid id)
     {
         var role = await _repository.GetRoleById(id);
 
@@ -59,7 +59,7 @@ public class RoleServices : IRoleServices
     {
         var roles = await _repository.GetListOfRoles();
 
-        if(roles.Count == 0 || roles == null)
+        if (roles.Count == 0 || roles == null)
         {
             throw new Exception("No Role Found");
         }
@@ -68,7 +68,7 @@ public class RoleServices : IRoleServices
         List<RoleDto> rolesDto = new();
 
 
-        foreach (var role in roles) 
+        foreach (var role in roles)
         {
 
             RoleDto mappedRole = new()
@@ -104,7 +104,7 @@ public class RoleServices : IRoleServices
     }
 
 
-    public async Task DeleteRoleAsync(long id)
+    public async Task DeleteRoleAsync(Guid id)
     {
         var role = await _repository.GetRoleById(id);
 
@@ -113,7 +113,7 @@ public class RoleServices : IRoleServices
             throw new Exception("Role Not Found");
         }
 
-      await  _repository.RemoveRole(role);
+        await _repository.RemoveRole(role);
 
 
     }
@@ -121,14 +121,56 @@ public class RoleServices : IRoleServices
     #endregion
 
 
-    #region AdminSide
+    #region Users Roles
 
 
-    public async Task ChangeUserRole(Guid userId)
+    public async Task<List<RoleDto>> GetUserRoles(Guid userId)
     {
-      
+
+        var UserRoles = await _repository.GetUserRolesWithDetails(userId);
+
+        var rolesDto = UserRoles.Select(role => new RoleDto
+        {
+            Id = role.Id,
+            Name = role.Name,
+            NormalizedName = role.NormalizedName
+
+        }).ToList();
+
+        return rolesDto;
 
     }
+
+
+    public async Task UpdateUserRoles(Guid userId, List<Guid> rolesIds)
+    {
+        //get user roles
+        var userroles = await _repository.GetUserSelectedRoles(userId);
+
+        // delete user roles
+        if ( userroles.Any())
+        {
+            _repository.RemoveUserRoles(userroles);
+        }
+
+
+        //add new roles
+
+        var newRoles = rolesIds.Select(r => new IdentityUserRole<Guid>
+        {
+            RoleId = r,
+            UserId = userId
+
+        }).ToList();
+
+        await _repository.AddNewUserRoles(newRoles);
+
+
+        //save
+        await _repository.SaveChangesAsync();
+
+    }
+
 
     #endregion
 

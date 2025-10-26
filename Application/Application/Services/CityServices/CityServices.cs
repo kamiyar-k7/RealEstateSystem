@@ -1,7 +1,7 @@
 ﻿
 using Application.Dtos.LcoationDtos;
 using Domain.Entities.Location;
-using Domain.IRepository;
+using Domain.IRepository.LocationIRepositories;
 
 namespace Application.Services.CityServices;
 
@@ -53,7 +53,7 @@ public class CityServices : ICityServices
                 Id = city.Id,
                 Name = city.Name,
                 ProvinceId = city.ProvinceId,
-                ProvinceName = city.ProvinceName,
+                
             };
 
             cities.Add(mappedCity);
@@ -70,7 +70,7 @@ public class CityServices : ICityServices
         CityEntity cityEntity = new()
         {
             Name = cityDto.Name,
-            ProvinceName = cityDto.ProvinceName,
+            
             ProvinceId = cityDto.ProvinceId,
         };
 
@@ -87,7 +87,7 @@ public class CityServices : ICityServices
 
 
         entity.Name = cityDto.Name;       
-        entity.ProvinceName = cityDto.ProvinceName;
+      
         entity.ProvinceId = cityDto.ProvinceId;
         
 

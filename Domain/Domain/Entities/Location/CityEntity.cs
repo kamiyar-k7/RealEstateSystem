@@ -11,7 +11,6 @@ public class CityEntity
     #region Rels
 
     public Guid ProvinceId { get; set; }
-    public string ProvinceName { get; set; }
     public ProvinceEntity Province { get; set; }
 
 
