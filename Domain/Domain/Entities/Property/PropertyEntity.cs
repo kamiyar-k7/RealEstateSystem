@@ -1,16 +1,15 @@
 ﻿using Domain.Entities.Identity;
+using Domain.Entities.Location;
 
 namespace Domain.Entities.Property;
 
-public class PropertyEntity : BaseEntity
+public class PropertyEntity : BaseEntity , IDeleteEntity
 {
 
-    //Base info
+    // info
     public string Title { get; set; }
 
     public string Description { get; set; }
-
-    public PropertyType Type { get; set; }
 
 
     // for map view
@@ -18,12 +17,37 @@ public class PropertyEntity : BaseEntity
     public double Longitude { get; set; }
 
 
+
+    public bool IsDeleted { get ; set ; }
+
+
     #region rels
 
-    public List<PropertyImageEntity> PropertyImages { get; set; } = new();
-    public ApplicationUser ApplicationUser { get; set; }
+    // user releation
+    public Guid OwnerId { get; set; }
+    public string OwnerFullName { get; set; }
+    public ApplicationUser Owner { get; set; }
 
-    // city and stater in future
+
+    public List<PropertyImageEntity> PropertyImages { get; set; } = new();
+
+
+    // type relation
+    public Guid PropertyTypeId { get; set; }
+    public string PropertyTypeName{ get; set; }
+    public PropertyTypeEntity PropertyType { get; set; }
+
+
+    // city and province  relations
+    public Guid CityId { get; set; }
+    public string CityName { get; set; }
+    public CityEntity City { get; set; }
+
+
+    public Guid provinceId { get; set; }
+    public string ProvinceName { get; set; }
+    public ProvinceEntity Province { get; set; }
+  
 
     #endregion
 
@@ -32,16 +56,7 @@ public class PropertyEntity : BaseEntity
 }
 
 
-public enum PropertyType
-{
-    Apartamant = 0,
-    Villa = 1,
-    Office = 2,
-    Shop = 3,
-    Land = 4,
-    Penthouse = 5 ,
 
-}
 
 
 

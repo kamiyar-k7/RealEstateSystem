@@ -1,4 +1,8 @@
 ﻿
+using Application.Services.BlogServices;
+using Application.Services.CityServices;
+using Application.Services.PropertyServices;
+using Application.Services.ProvinceServices;
 using Application.Services.RoleServices;
 using Application.Services.UserServices;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +18,15 @@ public static class ApplicationConfiguration
         services.AddScoped<IUserServices, UserServices>();
         services.AddScoped<IRoleServices, RoleServices>();
 
+
+       // services.AddScoped<IPropertyServices, PropertyService>();
+        services.AddScoped<IPropertyTypeServices ,  PropertyTypeServices>();
+        services.AddScoped<ICityServices, CityServices>();
+        services.AddScoped<IProvinceServices, ProvinceServices>();
+
+
+        services.AddScoped<IBlogServices , BlogServices>();
+        services.AddScoped<IBlogCategoryServices, BlogCategoryServices>();
 
 
         return services;

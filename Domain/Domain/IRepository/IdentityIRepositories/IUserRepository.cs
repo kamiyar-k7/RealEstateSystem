@@ -1,14 +1,13 @@
-﻿
-using Domain.Entities.Identity;
+﻿using Domain.Entities.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Domain.IRepository;
+namespace Domain.IRepository.IdentityIRepositories;
 
 public interface IUserRepository
 {
     Task SaveChangesAsync();
 
-    Task<ApplicationUser> GetUserById(long id);
+    Task<ApplicationUser> GetUserById(Guid id);
 
     Task<List<ApplicationUser>> GetListOfUsers();
 
@@ -16,6 +15,6 @@ public interface IUserRepository
 
     Task UpdateUser(ApplicationUser user);
 
-    Task RemoveUser(ApplicationUser user);
+    Task RemoveUser(Guid id);
 
 }

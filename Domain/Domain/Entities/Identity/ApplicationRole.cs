@@ -3,7 +3,9 @@
 
 namespace Domain.Entities.Identity;
 
-public class ApplicationRole : IdentityRole<long>
+public class ApplicationRole : IdentityRole<Guid>
 {
 
+
+	
 }

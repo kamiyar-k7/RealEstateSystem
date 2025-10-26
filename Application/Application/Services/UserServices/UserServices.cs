@@ -1,6 +1,6 @@
-﻿using Application.Dtos;
+﻿using Application.Dtos.IdentityDtos;
 using Domain.Entities.Identity;
-using Domain.IRepository;
+using Domain.IRepository.IdentityIRepositories;
 
 
 namespace Application.Services.UserServices;
@@ -80,7 +80,7 @@ public class UserServices : IUserServices
 
     }
 
-    public async Task<UserDto> GetUserByIdAsync(int id)
+    public async Task<UserDto> GetUserByIdAsync(Guid id)
     {
         var user = await _userRepository.GetUserById(id);
 
@@ -105,19 +105,13 @@ public class UserServices : IUserServices
     }
 
 
-    public async Task DeleteUserAsync(int id)
+    public async Task DeleteUserAsync(Guid id)
     {
-        var user = await _userRepository.GetUserById(id);
-        if (user == null)
-        {
-            throw new Exception("User Not Found");
-        }
-        await _userRepository.RemoveUser(user);
+        
+        await _userRepository.RemoveUser(id);
 
 
     }
-
-
 
     public async Task UpdateUserAsync(UserDto user)
     {
@@ -137,4 +131,7 @@ public class UserServices : IUserServices
 
     }
     #endregion
+
+
+    
 }
