@@ -4,10 +4,10 @@ namespace Domain.IRepository.LocationIRepositories;
 
 public interface IProvinceRepository
 {
-    Task<ProvinceEntity> GetProvinceById(Guid id);
-    Task<List<ProvinceEntity>> GetListOfProvinces();
-    Task AddNewProvince(ProvinceEntity Province);
-    Task UpdateProvince(ProvinceEntity Province);
-    Task DeleteProvince(ProvinceEntity Province);
+    Task<ProvinceEntity> GetProvinceByIdAsync(Guid id);
+    Task<List<ProvinceEntity>> GetListOfProvincesAsync();
+    Task AddNewProvinceAsync(ProvinceEntity Province);
+    Task UpdateProvinceAsync(ProvinceEntity Province);
+    Task DeleteProvinceAsync(ProvinceEntity Province);
 
 }

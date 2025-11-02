@@ -31,7 +31,7 @@ public class PropertyTypeRepository: IPropertyTypeRepository
     }
 
 
-    public async Task AddNewPropertyType(PropertyTypeEntity typeEntity)
+    public async Task AddNewPropertyTypeAsync(PropertyTypeEntity typeEntity)
     {
 
         await _context.PropertyType.AddAsync(typeEntity);
@@ -39,26 +39,26 @@ public class PropertyTypeRepository: IPropertyTypeRepository
 
     }
 
-    public async Task<PropertyTypeEntity> GetPropertyTypeById(Guid id)
+    public async Task<PropertyTypeEntity> GetPropertyTypeByIdAsync(Guid id)
     {
         return await _context.PropertyType.FindAsync(id);
     }
 
 
-    public async Task<List<PropertyTypeEntity>> GetListOFPropertyTypes() 
+    public async Task<List<PropertyTypeEntity>> GetListOFPropertyTypesAsync() 
     {
 
         return await _context.PropertyType.ToListAsync();
 
     }
 
-    public async Task UpdateProperty(PropertyTypeEntity propertyTypeEntity)
+    public async Task UpdatePropertyAsync(PropertyTypeEntity propertyTypeEntity)
     {
         _context.PropertyType.Update(propertyTypeEntity);
         await SaveChangesAsync();
     }
 
-    public async Task DeleteProperty(Guid Id) 
+    public async Task DeletePropertyAsync(Guid Id) 
     {
         await _context.PropertyType.Where(pt => pt.Id == Id).ExecuteDeleteAsync();
     }

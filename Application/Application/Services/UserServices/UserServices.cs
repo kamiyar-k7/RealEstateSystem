@@ -1,6 +1,7 @@
 ﻿using Application.Dtos.IdentityDtos;
 using Domain.Entities.Identity;
 using Domain.IRepository.IdentityIRepositories;
+using Microsoft.AspNetCore.Identity;
 
 
 namespace Application.Services.UserServices;
@@ -11,17 +12,19 @@ public class UserServices : IUserServices
     #region Ctor
 
     private readonly IUserRepository _userRepository;
-    public UserServices(IUserRepository userRepository)
+    private readonly UserManager<ApplicationUser> _userManager;
+    public UserServices(IUserRepository userRepository, UserManager<ApplicationUser> userManager)
     {
 
         _userRepository = userRepository;
+        _userManager = userManager;
     }
 
     #endregion
 
     #region General
 
-    public async Task AddUser(UserDto userDto)
+    public async Task AddUserAsync(UserDto userDto)
     {
 
 
@@ -34,7 +37,7 @@ public class UserServices : IUserServices
             ProfilPictureUrl = userDto.ProfilPictureUrl,
         };
 
-        await _userRepository.AddUser(user);
+        await _userRepository.AddUserAsync(user);
 
 
     }
@@ -43,7 +46,7 @@ public class UserServices : IUserServices
     public async Task<List<UserDto>> GetUsersAsync()
     {
 
-        var users = await _userRepository.GetListOfUsers();
+        List<ApplicationUser> users = await _userRepository.GetListOfUsersAsync();
 
         if (users.Count == 0 || users == null)
         {
@@ -52,28 +55,18 @@ public class UserServices : IUserServices
 
         }
 
-        List<UserDto> usersDto = new List<UserDto>();
 
-
-
-
-        foreach (var user in users)
+        List<UserDto> usersDto = users.Select(u => new UserDto
         {
+            UserName = u.UserName,
+            Email = u.Email,
+            FullName = u.FullName,
+            Id = u.Id,
+            PhoneNumber = u.PhoneNumber,
+            ProfilPictureUrl = u.ProfilPictureUrl,
+        }).ToList();
 
 
-            UserDto mappedUser = new UserDto()
-            {
-                UserName = user.UserName,
-                Email = user.Email,
-                FullName = user.FullName,
-                Id = user.Id,
-                PhoneNumber = user.PhoneNumber,
-                ProfilPictureUrl = user.ProfilPictureUrl,
-            };
-
-            usersDto.Add(mappedUser);
-
-        }
 
         return usersDto;
 
@@ -82,9 +75,7 @@ public class UserServices : IUserServices
 
     public async Task<UserDto> GetUserByIdAsync(Guid id)
     {
-        var user = await _userRepository.GetUserById(id);
-
-
+        var user = await _userRepository.GetUserByIdAsync(id);
 
         if (user == null)
         {
@@ -107,8 +98,8 @@ public class UserServices : IUserServices
 
     public async Task DeleteUserAsync(Guid id)
     {
-        
-        await _userRepository.RemoveUser(id);
+
+        await _userRepository.RemoveUserAsync(id);
 
 
     }
@@ -126,12 +117,46 @@ public class UserServices : IUserServices
             ProfilPictureUrl = user.ProfilPictureUrl,
         };
 
-        await _userRepository.UpdateUser(mappeduser);
+        await _userRepository.UpdateUserAsync(mappeduser);
 
 
     }
     #endregion
 
 
-    
+    #region User Roles
+
+
+    public async Task AddRolesToUserAsync(UserDto userDto)
+    {
+
+        var user = await _userManager.FindByIdAsync(userDto.Id.ToString());
+
+
+        List<string> rolesName = userDto.Roles.Select(r => r.Name).ToList();
+
+
+        var result = await _userManager.AddToRolesAsync(user, rolesName);
+
+
+    }
+
+    public async Task<IList<string>> GetUserRolesAsync(Guid userId)
+    {
+
+        var user = await _userManager.FindByIdAsync(userId.ToString());
+
+        return await _userManager.GetRolesAsync(user);
+    }
+
+    public async Task RemoveUserFromRoleAsync(Guid userId, string roleName)
+    {
+        var user = await _userManager.FindByIdAsync(userId.ToString());
+        await _userManager.RemoveFromRoleAsync(user, roleName);
+
+    }
+    #endregion
+
+
+
 }

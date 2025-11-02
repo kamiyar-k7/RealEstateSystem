@@ -30,12 +30,12 @@ public class BlogRepository : IBlogRepository
     }
 
 
-    public async Task<BlogEntity> GetBlogById(Guid id)
+    public async Task<BlogEntity> GetBlogByIdAsync(Guid id)
     {
         return await _context.Blog.FindAsync(id);
     }
 
-    public async Task<List<BlogEntity>> GetListOfBlogs(string search, int pageNumber, int pageSize)
+    public async Task<List<BlogEntity>> GetListOfBlogsAsync(string search, int pageNumber, int pageSize)
     {
 
         var query = _context.Blog.AsQueryable();
@@ -55,20 +55,20 @@ public class BlogRepository : IBlogRepository
 
 
 
-    public async Task AddBlog(BlogEntity blog)
+    public async Task AddBlogAsync(BlogEntity blog)
     {
         await _context.Blog.AddAsync(blog);
         await SaveChangesAsync();
 
     }
 
-    public async Task DeleteBlog(Guid id)
+    public async Task DeleteBlogAsync(Guid id)
     {
         await _context.Blog.Where(x => x.Id == id).ExecuteDeleteAsync();
         await SaveChangesAsync();
     }
 
-    public async Task UpdateBlog(BlogEntity blog)
+    public async Task UpdateBlogAsync(BlogEntity blog)
     {
         _context.Update(blog);
         await SaveChangesAsync();
@@ -77,7 +77,7 @@ public class BlogRepository : IBlogRepository
     #endregion
 
 
-    public async Task<List<BlogEntity>> GetListOfBlogsForAdmin(string search, int pageNumber, int pageSize)
+    public async Task<List<BlogEntity>> GetListOfBlogsForAdminAsync(string search, int pageNumber, int pageSize)
     {
 
 

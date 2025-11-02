@@ -21,9 +21,9 @@ public class CityServices : ICityServices
     #endregion
 
 
-    public async Task<CityDto> GetCityById(Guid id)
+    public async Task<CityDto> GetCityByIdAsync(Guid id)
     {
-        var entity = await _cityRepository.GetCityById(id);
+        CityEntity entity = await _cityRepository.GetCityByIdAsync(id);
 
         if (entity == null)
         {
@@ -40,9 +40,9 @@ public class CityServices : ICityServices
 
     }
 
-    public async Task<List<CityDto>> GetListOfCities()
+    public async Task<List<CityDto>> GetListOfCitiesAsync( string search , int pageNumber, int pageSize)
     {
-        var entities = await _cityRepository.GetListOfCities();
+        List<CityEntity> entities = await _cityRepository.GetListOfCitiesAsync(search , pageNumber , pageSize);
 
         List<CityDto> cities = new();
 
@@ -64,7 +64,7 @@ public class CityServices : ICityServices
 
     }
 
-    public async Task AddCity(CityDto cityDto)
+    public async Task AddCityAsync(CityDto cityDto)
     {
 
         CityEntity cityEntity = new()
@@ -74,16 +74,16 @@ public class CityServices : ICityServices
             ProvinceId = cityDto.ProvinceId,
         };
 
-        await _cityRepository.AddNewCity(cityEntity);
+        await _cityRepository.AddNewCityAsync(cityEntity);
 
 
     }
 
 
-    public async Task UpdateCity(CityDto cityDto) 
+    public async Task UpdateCityAsync(CityDto cityDto) 
     {
 
-        var entity = await _cityRepository.GetCityById(cityDto.Id);
+        CityEntity entity = await _cityRepository.GetCityByIdAsync(cityDto.Id);
 
 
         entity.Name = cityDto.Name;       
@@ -91,13 +91,13 @@ public class CityServices : ICityServices
         entity.ProvinceId = cityDto.ProvinceId;
         
 
-        await _cityRepository.UpdateCity(entity);
+        await _cityRepository.UpdateCityAsync(entity);
 
 
 
     }
 
-    public async Task DeleteCity(CityDto cityDto) 
+    public async Task DeleteCityAsync(CityDto cityDto) 
     {
 
         CityEntity entity = new()
@@ -105,7 +105,7 @@ public class CityServices : ICityServices
             Id = cityDto.Id,
         };
 
-        await _cityRepository.DeleteCity(entity);   
+        await _cityRepository.DeleteCityAsync(entity);   
 
     }
 

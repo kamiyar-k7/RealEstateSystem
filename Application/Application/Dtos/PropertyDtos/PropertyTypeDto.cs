@@ -1,7 +1,7 @@
 ﻿
 namespace Application.Dtos.PropertyDtos;
 
-public class PropertyTypeDto
+public sealed record PropertyTypeDto
 {
     public Guid Id { get; set; }
 

@@ -6,15 +6,15 @@ namespace Domain.IRepository.BlogIRepositories;
 public interface IBlogRepository
 {
 
-    Task<BlogEntity> GetBlogById(Guid id);
+    Task<BlogEntity> GetBlogByIdAsync(Guid id);
 
-    Task<List<BlogEntity>> GetListOfBlogs(string search, int pageNumber, int pageSize);
+    Task<List<BlogEntity>> GetListOfBlogsAsync(string search, int pageNumber, int pageSize);
 
-    Task AddBlog(BlogEntity blog);
+    Task AddBlogAsync(BlogEntity blog);
 
-    Task DeleteBlog(Guid id);
+    Task DeleteBlogAsync(Guid id);
 
-    Task UpdateBlog(BlogEntity blog);
+    Task UpdateBlogAsync(BlogEntity blog);
 
-    Task<List<BlogEntity>> GetListOfBlogsForAdmin(string search, int pageNumber, int pageSize);
+    Task<List<BlogEntity>> GetListOfBlogsForAdminAsync(string search, int pageNumber, int pageSize);
 }

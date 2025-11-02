@@ -2,7 +2,7 @@
 
 
 
-public class UserDto
+public sealed record UserDto
 {
     public Guid Id { get; set; }
     public string UserName { get; set; }

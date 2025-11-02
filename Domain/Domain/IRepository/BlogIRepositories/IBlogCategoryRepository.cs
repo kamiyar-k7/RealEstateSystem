@@ -6,15 +6,15 @@ namespace Domain.IRepository.BlogIRepositories;
 public interface IBlogCategoryRepository
 {
 
-    Task AddNewBlogCategory(BlogCategoryEntity blogCategory);
+    Task AddNewBlogCategoryAsync(BlogCategoryEntity blogCategory);
 
-    Task<BlogCategoryEntity> GetBlogCategoryById(Guid id);
+    Task<BlogCategoryEntity> GetBlogCategoryByIdAsync(Guid id);
 
-    Task<List<BlogCategoryEntity>> GetListOfBlogCategories();
+    Task<List<BlogCategoryEntity>> GetListOfBlogCategoriesAsync();
 
-    Task UpdateBlogCategory(BlogCategoryEntity blogCategory);
+    Task UpdateBlogCategoryAsync(BlogCategoryEntity blogCategory);
 
-    Task DeleteBlogCategory(Guid id);
+    Task DeleteBlogCategoryAsync(Guid id);
 
 
 }

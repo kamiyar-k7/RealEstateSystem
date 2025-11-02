@@ -22,7 +22,7 @@ public class BlogServices : IBlogServices
 
     public async Task<BlogDto> GetBlogById(Guid Id)
     {
-        var blog = await _blogRepository.GetBlogById(Id);
+        var blog = await _blogRepository.GetBlogByIdAsync(Id);
 
         if (blog == null)
         {
@@ -37,7 +37,7 @@ public class BlogServices : IBlogServices
             Description = blog.Description,
             Title = blog.Title,
             IsDeleted = blog.IsDeleted,
-            Summery = blog.Summery,
+            Summary = blog.Summery,
             BlogCategoryId = blog.CategoryId,
             CategoryName = blog.Category.Name
         };
@@ -50,7 +50,7 @@ public class BlogServices : IBlogServices
 
 
 
-        var blogs = await _blogRepository.GetListOfBlogs(search, pageNumber, pageSize);
+        var blogs = await _blogRepository.GetListOfBlogsAsync(search, pageNumber, pageSize);
 
         List<BlogDto> blogsDto = new();
 
@@ -66,7 +66,7 @@ public class BlogServices : IBlogServices
                 IsDeleted = blog.IsDeleted,
                 Title = blog.Title,
                 AuthorId = blog.AuthorId,
-                imageUrl = blog.ImageUrl
+                ImageUrl = blog.ImageUrl
             };
 
             blogsDto.Add(mappedlog);
@@ -86,19 +86,19 @@ public class BlogServices : IBlogServices
             AuthorName = blogDto.AuthorName,
             Description = blogDto.Description,
             AuthorId = blogDto.AuthorId,
-            Summery = blogDto.Summery,
+            Summery = blogDto.Summary,
             CategoryId = blogDto.BlogCategoryId
 
 
         };
 
-        await _blogRepository.AddBlog(blog);
+        await _blogRepository.AddBlogAsync(blog);
 
     }
 
     public async Task UpdateBlog(BlogDto blogDto)
     {
-        var blog = await _blogRepository.GetBlogById(blogDto.Id);
+        var blog = await _blogRepository.GetBlogByIdAsync(blogDto.Id);
 
         if (blog == null)
         {
@@ -107,25 +107,25 @@ public class BlogServices : IBlogServices
 
         blog.Title = blogDto.Title;
         blog.Description = blogDto.Description;
-        blog.ImageUrl = blogDto.imageUrl;
+        blog.ImageUrl = blogDto.ImageUrl;
 
-        await _blogRepository.UpdateBlog(blog);
+        await _blogRepository.UpdateBlogAsync(blog);
 
     }
 
     public async Task DeleteBlog(Guid id)
     {
-        await _blogRepository.DeleteBlog(id);
+        await _blogRepository.DeleteBlogAsync(id);
 
     }
 
     public async Task SoftDeleteBlog(Guid id)
     {
-        var blog = await _blogRepository.GetBlogById(id);
+        var blog = await _blogRepository.GetBlogByIdAsync(id);
 
         blog.IsDeleted = true;
 
-        await _blogRepository.UpdateBlog(blog);
+        await _blogRepository.UpdateBlogAsync(blog);
     }
 
     #endregion
@@ -135,7 +135,7 @@ public class BlogServices : IBlogServices
     {
 
 
-        var blogs = await _blogRepository.GetListOfBlogsForAdmin(search, pageNumber, pageSize);
+        var blogs = await _blogRepository.GetListOfBlogsForAdminAsync(search, pageNumber, pageSize);
 
         List<BlogDto> blogsDto = new();
 
@@ -148,11 +148,11 @@ public class BlogServices : IBlogServices
                 AuthorName = blog.AuthorName,
                 CreateAt = blog.CreateAt,
                 Description = blog.Description,
-                Summery = blog.Summery,
+                Summary = blog.Summery,
                 IsDeleted = blog.IsDeleted,
                 Title = blog.Title,
                 AuthorId = blog.AuthorId,
-                imageUrl = blog.ImageUrl,
+                ImageUrl = blog.ImageUrl,
                 BlogCategoryId = blog.CategoryId,
                 CategoryName = blog.Category.Name
 

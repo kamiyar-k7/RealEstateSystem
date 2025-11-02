@@ -23,7 +23,7 @@ public class ProvinceServices : IProvinceServices
 
     public async Task<ProvinceDto> GetProvinceById(Guid id)
     {
-        var entity = await _ProvinceRepository.GetProvinceById(id);
+        var entity = await _ProvinceRepository.GetProvinceByIdAsync(id);
 
         if (entity == null)
         {
@@ -42,7 +42,7 @@ public class ProvinceServices : IProvinceServices
 
     public async Task<List<ProvinceDto>> GetListOfProvinces()
     {
-        var entities = await _ProvinceRepository.GetListOfProvinces();
+        var entities = await _ProvinceRepository.GetListOfProvincesAsync();
 
         List<ProvinceDto> cities = new();
 
@@ -72,7 +72,7 @@ public class ProvinceServices : IProvinceServices
             
         };
 
-        await _ProvinceRepository.AddNewProvince(ProvinceEntity);
+        await _ProvinceRepository.AddNewProvinceAsync(ProvinceEntity);
 
 
     }
@@ -81,14 +81,14 @@ public class ProvinceServices : IProvinceServices
     public async Task UpdateProvince(ProvinceDto ProvinceDto)
     {
 
-        var entity = await _ProvinceRepository.GetProvinceById(ProvinceDto.Id);
+        var entity = await _ProvinceRepository.GetProvinceByIdAsync(ProvinceDto.Id);
 
 
         entity.Name = ProvinceDto.Name;
         
 
 
-        await _ProvinceRepository.UpdateProvince(entity);
+        await _ProvinceRepository.UpdateProvinceAsync(entity);
 
 
 

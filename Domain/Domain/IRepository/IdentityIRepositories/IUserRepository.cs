@@ -7,14 +7,14 @@ public interface IUserRepository
 {
     Task SaveChangesAsync();
 
-    Task<ApplicationUser> GetUserById(Guid id);
+    Task<ApplicationUser> GetUserByIdAsync(Guid id);
 
-    Task<List<ApplicationUser>> GetListOfUsers();
+    Task<List<ApplicationUser>> GetListOfUsersAsync();
 
-    Task AddUser(ApplicationUser user);
+    Task AddUserAsync(ApplicationUser user);
 
-    Task UpdateUser(ApplicationUser user);
+    Task UpdateUserAsync(ApplicationUser user);
 
-    Task RemoveUser(Guid id);
+    Task RemoveUserAsync(Guid id);
 
 }

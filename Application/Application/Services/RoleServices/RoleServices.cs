@@ -2,6 +2,7 @@
 using Domain.Entities.Identity;
 using Domain.IRepository.IdentityIRepositories;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace Application.Services.RoleServices;
@@ -10,11 +11,13 @@ public class RoleServices : IRoleServices
 {
 
     #region ctor
-    private readonly IRoleRepository _repository;
+   
+    private readonly RoleManager<ApplicationRole> _roleManager;
 
-    public RoleServices(IRoleRepository repository)
+    public RoleServices(IRoleRepository repository, RoleManager<ApplicationRole> roleManager)
     {
-        _repository = repository;
+     
+        _roleManager = roleManager;
     }
     #endregion
 
@@ -31,14 +34,14 @@ public class RoleServices : IRoleServices
         };
 
 
-        await _repository.AddRole(mappedRole);
+        await _roleManager.CreateAsync(mappedRole);
 
     }
 
 
     public async Task<RoleDto> GetRoleByIdAsync(Guid id)
     {
-        var role = await _repository.GetRoleById(id);
+        var role = await _roleManager.FindByIdAsync(id.ToString());
 
         if (role == null)
         {
@@ -47,6 +50,7 @@ public class RoleServices : IRoleServices
 
         RoleDto mappedRole = new()
         {
+            Id = role.Id,
             Name = role.Name,
             NormalizedName = role.NormalizedName
         };
@@ -57,35 +61,25 @@ public class RoleServices : IRoleServices
 
     public async Task<List<RoleDto>> GetRolesAsync()
     {
-        var roles = await _repository.GetListOfRoles();
+        var roles = await _roleManager.Roles.ToListAsync();
 
-        if (roles.Count == 0 || roles == null)
+        if (roles.Count == 0 || !roles.Any())
         {
             throw new Exception("No Role Found");
         }
 
 
-        List<RoleDto> rolesDto = new();
+      
 
-
-        foreach (var role in roles)
+        var rolesdto = roles.Select(r => new RoleDto
         {
-
-            RoleDto mappedRole = new()
-            {
-
-                Id = role.Id,
-                Name = role.Name,
-                NormalizedName = role.NormalizedName
-
-            };
-
-            rolesDto.Add(mappedRole);
+            Id = r.Id,
+            Name = r.Name,
+            NormalizedName = r.NormalizedName
+        }).ToList();
 
 
-        }
-
-        return rolesDto;
+        return rolesdto;
     }
 
 
@@ -99,21 +93,21 @@ public class RoleServices : IRoleServices
             NormalizedName = roledto.NormalizedName
         };
 
-        await _repository.UpdateRole(mappedRole);
+        await _roleManager.UpdateAsync(mappedRole);
 
     }
 
 
     public async Task DeleteRoleAsync(Guid id)
     {
-        var role = await _repository.GetRoleById(id);
+        var role = await _roleManager.FindByIdAsync(id.ToString());
 
         if (role == null)
         {
             throw new Exception("Role Not Found");
         }
 
-        await _repository.RemoveRole(role);
+        await _roleManager.DeleteAsync(role);
 
 
     }
@@ -124,52 +118,62 @@ public class RoleServices : IRoleServices
     #region Users Roles
 
 
-    public async Task<List<RoleDto>> GetUserRoles(Guid userId)
-    {
+    //public async Task<List<RoleDto>> GetUserRoles(Guid userId)
+    //{
 
-        var UserRoles = await _repository.GetUserRolesWithDetails(userId);
+    //    var UserRoles = await _repository.GetUserRolesWithDetails(userId);
 
-        var rolesDto = UserRoles.Select(role => new RoleDto
-        {
-            Id = role.Id,
-            Name = role.Name,
-            NormalizedName = role.NormalizedName
+    //    var rolesDto = UserRoles.Select(role => new RoleDto
+    //    {
+    //        Id = role.Id,
+    //        Name = role.Name,
+    //        NormalizedName = role.NormalizedName
 
-        }).ToList();
+    //    }).ToList();
 
-        return rolesDto;
+    //    return rolesDto;
 
-    }
-
-
-    public async Task UpdateUserRoles(Guid userId, List<Guid> rolesIds)
-    {
-        //get user roles
-        var userroles = await _repository.GetUserSelectedRoles(userId);
-
-        // delete user roles
-        if ( userroles.Any())
-        {
-            _repository.RemoveUserRoles(userroles);
-        }
+    //}
 
 
-        //add new roles
 
-        var newRoles = rolesIds.Select(r => new IdentityUserRole<Guid>
-        {
-            RoleId = r,
-            UserId = userId
-
-        }).ToList();
-
-        await _repository.AddNewUserRoles(newRoles);
+    //public async Task AddUserToRoleAsync(ApplicationUser user, string roleName)
+    //{
+    //    if (!await _userManager.IsInRoleAsync(user, roleName))
+    //    {
+    //        await _userManager.AddToRoleAsync(user, roleName);
+    //    }
+    //}
 
 
-        //save
-        await _repository.SaveChangesAsync();
+    //public async Task UpdateUserRoles(Guid userId, List<Guid> rolesIds)
+    //{
+    //    //get user roles
+    //    var userroles = await _repository.GetUserSelectedRoles(userId);
 
-    }
+    //    // delete user roles
+    //    if ( userroles.Any())
+    //    {
+    //        _repository.RemoveUserRoles(userroles);
+    //    }
+
+
+    //    //add new roles
+
+    //    var newRoles = rolesIds.Select(r => new IdentityUserRole<Guid>
+    //    {
+    //        RoleId = r,
+    //        UserId = userId
+
+    //    }).ToList();
+
+    //    await _repository.AddNewUserRoles(newRoles);
+
+
+    //    //save
+    //    await _repository.SaveChangesAsync();
+
+    //}
 
 
     #endregion

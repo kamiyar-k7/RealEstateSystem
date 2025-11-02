@@ -31,14 +31,14 @@ public class PropertyTypeServices : IPropertyTypeServices
 
         };
 
-        await _typeRepository.AddNewPropertyType(entity);
+        await _typeRepository.AddNewPropertyTypeAsync(entity);
 
     }
 
     public async Task<PropertyTypeDto> GetPropertyTypeById(Guid id)
     {
 
-        var entity = await _typeRepository.GetPropertyTypeById(id);
+        var entity = await _typeRepository.GetPropertyTypeByIdAsync(id);
 
         if (entity == null)
         {
@@ -67,7 +67,7 @@ public class PropertyTypeServices : IPropertyTypeServices
     public async Task<List<PropertyTypeDto>> GetListOfPropertyTypes()
     {
 
-        var propertyTypes = await _typeRepository.GetListOFPropertyTypes();
+        var propertyTypes = await _typeRepository.GetListOFPropertyTypesAsync();
 
         List<PropertyTypeDto> dtoList = new List<PropertyTypeDto>();
 
@@ -93,13 +93,13 @@ public class PropertyTypeServices : IPropertyTypeServices
             Name = typeDto.Name,
         };
 
-        await _typeRepository.UpdateProperty(typeEntity);
+        await _typeRepository.UpdatePropertyAsync(typeEntity);
 
     }
 
     public async Task DeletePropertyType(Guid id)
     {
-        await _typeRepository.DeleteProperty(id);
+        await _typeRepository.DeletePropertyAsync(id);
 
     }
 
