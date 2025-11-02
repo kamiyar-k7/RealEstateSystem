@@ -1,6 +1,6 @@
 ﻿namespace Application.Dtos.IdentityDtos;
 
-public class RoleDto
+public sealed record RoleDto
 {
 
     public Guid Id { get; set; }

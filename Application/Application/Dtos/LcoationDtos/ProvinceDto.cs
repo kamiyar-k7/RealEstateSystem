@@ -1,7 +1,7 @@
 ﻿
 namespace Application.Dtos.LcoationDtos;
 
-public class ProvinceDto
+public sealed record ProvinceDto
 {
 
     public Guid Id { get; set; }

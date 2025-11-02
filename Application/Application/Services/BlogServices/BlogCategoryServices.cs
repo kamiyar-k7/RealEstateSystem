@@ -27,14 +27,14 @@ public class BlogCategoryServices : IBlogCategoryServices
             Name = categoryDto.Name,
         };
        
-        await _repository.AddNewBlogCategory(categoryEntity);
+        await _repository.AddNewBlogCategoryAsync(categoryEntity);
     }
 
 
     public async Task<BlogCategoryDto> GetBlogCategoryById(Guid id)
     {
-     var categoryEntity = await _repository.GetBlogCategoryById(id);
-
+     var categoryEntity = await _repository.GetBlogCategoryByIdAsync(id);
+        
         if (categoryEntity == null) 
         {
             throw new Exception("Blog Category Not Found");
@@ -52,7 +52,7 @@ public class BlogCategoryServices : IBlogCategoryServices
 
     public async Task<List<BlogCategoryDto>> GetListOfBlogCategories()
     {
-          var categoryEntities = await _repository.GetListOfBlogCategories();
+          var categoryEntities = await _repository.GetListOfBlogCategoriesAsync();
 
         List<BlogCategoryDto> dtolist = new();
 
@@ -79,12 +79,12 @@ public class BlogCategoryServices : IBlogCategoryServices
             Name = blogCategory.Name,
         };
 
-        await _repository.UpdateBlogCategory(blogCategoryEntity);
+        await _repository.UpdateBlogCategoryAsync(blogCategoryEntity);
     }
 
     public async Task DeleteBlogCategory(Guid id)
     {
-        await _repository.DeleteBlogCategory(id);
+        await _repository.DeleteBlogCategoryAsync(id);
     }
 
     #endregion

@@ -1,9 +1,9 @@
 ﻿
-using Domain.Entities.Property;
+
 
 namespace Application.Dtos.PropertyDtos;
 
-public class PropertyImageDto
+public sealed record PropertyImageDto
 {
     public Guid Id { get; set; }
     public string ImageUrl { get; set; }

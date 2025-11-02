@@ -27,7 +27,7 @@ public class BlogCategoryRepository : IBlogCategoryRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task AddNewBlogCategory(BlogCategoryEntity blogCategory)
+    public async Task AddNewBlogCategoryAsync(BlogCategoryEntity blogCategory)
     {
 
         await _context.BlogCategory.AddAsync(blogCategory);
@@ -35,25 +35,25 @@ public class BlogCategoryRepository : IBlogCategoryRepository
         await SaveChangesAsync();
     }
 
-    public async Task<BlogCategoryEntity> GetBlogCategoryById(Guid id)
+    public async Task<BlogCategoryEntity> GetBlogCategoryByIdAsync(Guid id)
     {
         return await _context.BlogCategory.FindAsync(id);
     }
 
-    public async Task<List<BlogCategoryEntity>> GetListOfBlogCategories()
+    public async Task<List<BlogCategoryEntity>> GetListOfBlogCategoriesAsync()
     {
         return await _context.BlogCategory.ToListAsync();
     }
 
 
-    public async Task UpdateBlogCategory(BlogCategoryEntity blogCategory) 
+    public async Task UpdateBlogCategoryAsync(BlogCategoryEntity blogCategory) 
     {
          _context.BlogCategory.Update(blogCategory);
         await SaveChangesAsync();
 
     }
 
-    public async Task DeleteBlogCategory(Guid id) 
+    public async Task DeleteBlogCategoryAsync(Guid id) 
     {
         await _context.BlogCategory.Where(bc=> bc.Id == id).ExecuteDeleteAsync();
         await SaveChangesAsync();

@@ -7,15 +7,15 @@ public interface IPropertyTypeRepository
 {
 
 
-    Task AddNewPropertyType(PropertyTypeEntity typeEntity);
+    Task AddNewPropertyTypeAsync(PropertyTypeEntity typeEntity);
 
-    Task<PropertyTypeEntity> GetPropertyTypeById(Guid Id);
+    Task<PropertyTypeEntity> GetPropertyTypeByIdAsync(Guid Id);
 
-    Task<List<PropertyTypeEntity>> GetListOFPropertyTypes();
+    Task<List<PropertyTypeEntity>> GetListOFPropertyTypesAsync();
 
-    Task UpdateProperty(PropertyTypeEntity propertyTypeEntity);
+    Task UpdatePropertyAsync(PropertyTypeEntity propertyTypeEntity);
 
-    Task DeleteProperty(Guid Id);
+    Task DeletePropertyAsync(Guid Id);
 
 
 }

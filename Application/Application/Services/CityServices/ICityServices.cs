@@ -9,19 +9,19 @@ namespace Application.Services.CityServices;
 public interface ICityServices
 {
 
-    Task<CityDto> GetCityById(Guid id);
+    Task<CityDto> GetCityByIdAsync(Guid id);
 
 
-    Task<List<CityDto>> GetListOfCities();
+    Task<List<CityDto>> GetListOfCitiesAsync(string search, int pageNumber, int pageSize);
 
 
-    Task AddCity(CityDto cityDto);
+    Task AddCityAsync(CityDto cityDto);
 
 
 
-    Task UpdateCity(CityDto cityDto);
+    Task UpdateCityAsync(CityDto cityDto);
 
-    Task DeleteCity(CityDto cityDto);
+    Task DeleteCityAsync(CityDto cityDto);
 
 
 }
