@@ -12,7 +12,7 @@ public class BlogCategoryEntity
     #region Rels
 
 
-    public List<BlogEntity> Blogs { get; set; }
+    public List<BlogEntity> Blogs { get; set; } = new();
 
     #endregion
 

@@ -1,4 +1,5 @@
-﻿using Domain.IRepository.BlogIRepositories;
+﻿using Domain.Entities.Identity;
+using Domain.IRepository.BlogIRepositories;
 using Domain.IRepository.IdentityIRepositories;
 using Domain.IRepository.LocationIRepositories;
 using Domain.IRepository.PropertyIRepsitories;
@@ -22,17 +23,23 @@ public static class InfrastructureConfiguration
         services.AddDbContext<RealEstateDataBaseContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("RealEstateDbConnectionString")));
 
-        services.AddScoped<IUserRepository, UserRepository>();
-        services.AddScoped<IRoleRepository, RoleRepository>();
+        services.AddIdentityCore<ApplicationUser>()
+                .AddRoles<ApplicationRole>()
+                .AddEntityFrameworkStores<RealEstateDataBaseContext>();
 
-        //services.AddScoped<IPropertyRepository, PropertyRepository>();
+
+
+
+        
+        services.AddScoped<IUserRepository, UserRepository>();
+
         services.AddScoped<IPropertyTypeRepository, PropertyTypeRepository>();
         services.AddScoped<IProvinceRepository, ProvinceRepository>();
-        services.AddScoped<ICityRepository , CityRepository>();
+        services.AddScoped<ICityRepository, CityRepository>();
 
 
         services.AddScoped<IBlogRepository, BlogRepository>();
-        services.AddScoped<IBlogRepository, BlogRepository>();
+        services.AddScoped<IBlogCategoryRepository, BlogCategoryRepository>();
 
 
         return services;

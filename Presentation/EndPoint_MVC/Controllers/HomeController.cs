@@ -15,6 +15,9 @@ namespace EndPoint_MVC.Controllers
 
         public IActionResult Index()
         {
+
+            _logger.LogError("test index");
+
             return View();
         }
 

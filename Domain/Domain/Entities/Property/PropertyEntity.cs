@@ -40,12 +40,10 @@ public class PropertyEntity : BaseEntity , IDeleteEntity
 
     // city and province  relations
     public Guid CityId { get; set; }
-    public string CityName { get; set; }
     public CityEntity City { get; set; }
 
 
-    public Guid provinceId { get; set; }
-    public string ProvinceName { get; set; }
+    public Guid ProvinceId { get; set; }
     public ProvinceEntity Province { get; set; }
   
 

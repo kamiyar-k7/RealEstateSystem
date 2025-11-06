@@ -102,7 +102,7 @@ public class ProvinceServices : IProvinceServices
             Id = ProvinceDto.Id,
         };
 
-        await _ProvinceRepository.DeleteProvince(entity);
+        await _ProvinceRepository.DeleteProvinceAsync(entity);
 
     }
 
