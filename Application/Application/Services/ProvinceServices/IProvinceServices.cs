@@ -5,17 +5,17 @@ namespace Application.Services.ProvinceServices;
 
 public interface IProvinceServices
 {
-    Task<ProvinceDto> GetProvinceById(Guid id);
+    Task<ProvinceDto> GetProvinceByIdAsync(Guid id);
 
 
-    Task<List<ProvinceDto>> GetListOfProvinces();
+    Task<List<ProvinceDto>> GetListOfProvincesAsync();
 
 
-    Task AddProvince(ProvinceDto ProvinceDto);
+    Task AddProvinceAsync(ProvinceDto ProvinceDto);
 
 
 
-    Task UpdateProvince(ProvinceDto ProvinceDto);
+    Task UpdateProvinceAsync(ProvinceDto ProvinceDto);
 
-    Task DeleteProvince(ProvinceDto ProvinceDto);
+    Task DeleteProvinceAsync(ProvinceDto ProvinceDto);
 }

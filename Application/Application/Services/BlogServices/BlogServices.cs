@@ -1,4 +1,5 @@
 ﻿using Application.Dtos.BlogDtos;
+using AutoMapper;
 using Domain.Entities.Blog;
 using Domain.IRepository.BlogIRepositories;
 
@@ -8,11 +9,12 @@ public class BlogServices : IBlogServices
 {
 
     #region Ctor
-
+    private readonly IMapper _mapper;
     private readonly IBlogRepository _blogRepository;
 
-    public BlogServices(IBlogRepository blogRepository)
+    public BlogServices(IMapper mapper,IBlogRepository blogRepository)
     {
+        _mapper = mapper;
         _blogRepository = blogRepository;
     }
 
@@ -20,83 +22,47 @@ public class BlogServices : IBlogServices
 
     #region General
 
-    public async Task<BlogDto> GetBlogById(Guid Id)
+    public async Task<BlogDto> GetBlogByIdAsync(Guid Id)
     {
-        var blog = await _blogRepository.GetBlogByIdAsync(Id);
+        BlogEntity blog = await _blogRepository.GetBlogByIdAsync(Id);
 
         if (blog == null)
         {
             throw new Exception("Blog Not Found");
         }
 
-        BlogDto dto = new()
-        {
-            Id = Id,
-            AuthorName = blog.AuthorName,
-            CreateAt = blog.CreateAt,
-            Description = blog.Description,
-            Title = blog.Title,
-            IsDeleted = blog.IsDeleted,
-            Summary = blog.Summery,
-            BlogCategoryId = blog.CategoryId,
-            CategoryName = blog.Category.Name
-        };
+
+        BlogDto dto = _mapper.Map<BlogDto>(blog);
 
         return dto;
     }
 
-    public async Task<List<BlogDto>> GetListOfBlogs(string search, int pageNumber, int pageSize)
+    public async Task<List<BlogDto>> GetListOfBlogsAsync(string search, int pageNumber, int pageSize)
     {
 
 
 
-        var blogs = await _blogRepository.GetListOfBlogsAsync(search, pageNumber, pageSize);
+        List<BlogEntity> blogs = await _blogRepository.GetListOfBlogsAsync(search, pageNumber, pageSize);
 
-        List<BlogDto> blogsDto = new();
 
-        foreach (var blog in blogs)
-        {
+        List<BlogDto> blogDtos = _mapper.Map<List<BlogDto>>(blogs);
 
-            BlogDto mappedlog = new()
-            {
-                Id = blog.Id,
-                AuthorName = blog.AuthorName,
-                CreateAt = blog.CreateAt,
-                Description = blog.Description,
-                IsDeleted = blog.IsDeleted,
-                Title = blog.Title,
-                AuthorId = blog.AuthorId,
-                ImageUrl = blog.ImageUrl
-            };
-
-            blogsDto.Add(mappedlog);
-        }
-
-        return blogsDto;
+        return blogDtos;
 
     }
 
 
-    public async Task AddNewBlog(BlogDto blogDto)
+    public async Task AddNewBlogAsync(BlogDto blogDto)
     {
 
-        BlogEntity blog = new()
-        {
-            Title = blogDto.Title,
-            AuthorName = blogDto.AuthorName,
-            Description = blogDto.Description,
-            AuthorId = blogDto.AuthorId,
-            Summery = blogDto.Summary,
-            CategoryId = blogDto.BlogCategoryId
 
-
-        };
+        BlogEntity blog= _mapper.Map<BlogEntity>(blogDto);
 
         await _blogRepository.AddBlogAsync(blog);
 
     }
 
-    public async Task UpdateBlog(BlogDto blogDto)
+    public async Task UpdateBlogAsync(BlogDto blogDto)
     {
         var blog = await _blogRepository.GetBlogByIdAsync(blogDto.Id);
 
@@ -113,13 +79,13 @@ public class BlogServices : IBlogServices
 
     }
 
-    public async Task DeleteBlog(Guid id)
+    public async Task DeleteBlogAsync(Guid id)
     {
         await _blogRepository.DeleteBlogAsync(id);
 
     }
 
-    public async Task SoftDeleteBlog(Guid id)
+    public async Task SoftDeleteBlogAsync(Guid id)
     {
         var blog = await _blogRepository.GetBlogByIdAsync(id);
 
@@ -131,37 +97,15 @@ public class BlogServices : IBlogServices
     #endregion
 
 
-    public async Task<List<BlogDto>> GetListOfBlogsForAdmin(string search, int pageNumber, int pageSize)
+    public async Task<List<BlogDto>> GetListOfBlogsForAdminAsync(string search, int pageNumber, int pageSize)
     {
 
 
-        var blogs = await _blogRepository.GetListOfBlogsForAdminAsync(search, pageNumber, pageSize);
+        List<BlogEntity> blogs = await _blogRepository.GetListOfBlogsForAdminAsync(search, pageNumber, pageSize);
 
-        List<BlogDto> blogsDto = new();
+        List<BlogDto> blogDtos = _mapper.Map<List<BlogDto>>(blogs);
 
-        foreach (var blog in blogs)
-        {
-
-            BlogDto mappedlog = new()
-            {
-                Id = blog.Id,
-                AuthorName = blog.AuthorName,
-                CreateAt = blog.CreateAt,
-                Description = blog.Description,
-                Summary = blog.Summery,
-                IsDeleted = blog.IsDeleted,
-                Title = blog.Title,
-                AuthorId = blog.AuthorId,
-                ImageUrl = blog.ImageUrl,
-                BlogCategoryId = blog.CategoryId,
-                CategoryName = blog.Category.Name
-
-            };
-
-            blogsDto.Add(mappedlog);
-        }
-
-        return blogsDto;
+        return blogDtos;
 
     }
 }

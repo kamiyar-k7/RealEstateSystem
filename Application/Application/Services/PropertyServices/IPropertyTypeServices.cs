@@ -7,18 +7,18 @@ namespace Application.Services.PropertyServices;
 
 public interface IPropertyTypeServices
 {
-    Task AddNewPropertyType(PropertyTypeDto typeDto);
+    Task AddNewPropertyTypeAsync(PropertyTypeDto typeDto);
 
 
-    Task<PropertyTypeDto> GetPropertyTypeById(Guid id);
+    Task<PropertyTypeDto> GetPropertyTypeByIdAsync(Guid id);
 
 
-    Task<List<PropertyTypeDto>> GetListOfPropertyTypes();
+    Task<List<PropertyTypeDto>> GetListOfPropertyTypesAsync();
 
 
-    Task UpdatePropertType(PropertyTypeDto typeDto);
+    Task UpdatePropertTypeAsync(PropertyTypeDto typeDto);
 
 
-    Task DeletePropertyType(Guid id);
+    Task DeletePropertyTypeAsync(Guid id);
   
 }

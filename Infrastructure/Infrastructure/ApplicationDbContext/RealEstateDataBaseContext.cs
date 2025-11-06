@@ -36,19 +36,19 @@ public class RealEstateDataBaseContext : IdentityDbContext<ApplicationUser, Appl
     {
         base.OnModelCreating(modelBuilder);
 
-        // رابطه Property → City (با حذف cascade)
+       
         modelBuilder.Entity<PropertyEntity>()
             .HasOne(p => p.City)
             .WithMany()
             .HasForeignKey(p => p.CityId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // رابطه Property → Province (بدون cascade)
+     
         modelBuilder.Entity<PropertyEntity>()
             .HasOne(p => p.Province)
             .WithMany()
             .HasForeignKey(p => p.ProvinceId)
-            .OnDelete(DeleteBehavior.Restrict); // یا NoAction
+            .OnDelete(DeleteBehavior.Restrict); 
     }
 
 }

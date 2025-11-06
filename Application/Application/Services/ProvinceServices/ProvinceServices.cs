@@ -1,6 +1,7 @@
 ﻿
 
 using Application.Dtos.LcoationDtos;
+using AutoMapper;
 using Domain.Entities.Location;
 using Domain.IRepository.LocationIRepositories;
 
@@ -10,20 +11,22 @@ public class ProvinceServices : IProvinceServices
 {
     #region Ctor
 
+    private readonly IMapper _mapper;
     private readonly IProvinceRepository _ProvinceRepository;
 
-    public ProvinceServices(IProvinceRepository ProvinceRepository)
+    public ProvinceServices(IProvinceRepository ProvinceRepository, IMapper mapper)
     {
         _ProvinceRepository = ProvinceRepository;
+        _mapper = mapper;
     }
 
 
     #endregion
 
 
-    public async Task<ProvinceDto> GetProvinceById(Guid id)
+    public async Task<ProvinceDto> GetProvinceByIdAsync(Guid id)
     {
-        var entity = await _ProvinceRepository.GetProvinceByIdAsync(id);
+        ProvinceEntity entity = await _ProvinceRepository.GetProvinceByIdAsync(id);
 
         if (entity == null)
         {
@@ -40,30 +43,18 @@ public class ProvinceServices : IProvinceServices
 
     }
 
-    public async Task<List<ProvinceDto>> GetListOfProvinces()
+    public async Task<List<ProvinceDto>> GetListOfProvincesAsync()
     {
-        var entities = await _ProvinceRepository.GetListOfProvincesAsync();
+        List<ProvinceEntity> entities = await _ProvinceRepository.GetListOfProvincesAsync();
 
-        List<ProvinceDto> cities = new();
-
-        foreach (var Province in entities)
-        {
-            ProvinceDto mappedProvince = new()
-            {
-                Id = Province.Id,
-                Name = Province.Name
-               
-            };
-
-            cities.Add(mappedProvince);
-        }
+        List<ProvinceDto> cities = _mapper.Map<List<ProvinceDto>>(entities);
 
         return cities;
 
 
     }
 
-    public async Task AddProvince(ProvinceDto ProvinceDto)
+    public async Task AddProvinceAsync(ProvinceDto ProvinceDto)
     {
 
         ProvinceEntity ProvinceEntity = new()
@@ -78,7 +69,7 @@ public class ProvinceServices : IProvinceServices
     }
 
 
-    public async Task UpdateProvince(ProvinceDto ProvinceDto)
+    public async Task UpdateProvinceAsync(ProvinceDto ProvinceDto)
     {
 
         var entity = await _ProvinceRepository.GetProvinceByIdAsync(ProvinceDto.Id);
@@ -94,7 +85,7 @@ public class ProvinceServices : IProvinceServices
 
     }
 
-    public async Task DeleteProvince(ProvinceDto ProvinceDto)
+    public async Task DeleteProvinceAsync(ProvinceDto ProvinceDto)
     {
 
         ProvinceEntity entity = new()

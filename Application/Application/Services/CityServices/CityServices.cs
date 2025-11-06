@@ -1,5 +1,6 @@
 ﻿
 using Application.Dtos.LcoationDtos;
+using AutoMapper;
 using Domain.Entities.Location;
 using Domain.IRepository.LocationIRepositories;
 
@@ -10,10 +11,12 @@ public class CityServices : ICityServices
 
     #region Ctor
 
+    private readonly  IMapper _mapper;
     private readonly ICityRepository _cityRepository;
 
-    public CityServices(ICityRepository cityRepository)
+    public CityServices(IMapper mapper,ICityRepository cityRepository)
     {
+        _mapper = mapper;
         _cityRepository = cityRepository;
     }
 
@@ -44,20 +47,11 @@ public class CityServices : ICityServices
     {
         List<CityEntity> entities = await _cityRepository.GetListOfCitiesAsync(search , pageNumber , pageSize);
 
-        List<CityDto> cities = new();
 
-        foreach (var city in entities)
-        {
-            CityDto mappedCity = new()
-            {
-                Id = city.Id,
-                Name = city.Name,
-                ProvinceId = city.ProvinceId,
-                
-            };
 
-            cities.Add(mappedCity);
-        }
+        List<CityDto> cities = _mapper.Map<List<CityDto>>(entities);  
+
+   
 
         return cities;
 

@@ -17,6 +17,7 @@ namespace EndPoint_MVC.Controllers
         {
 
             _logger.LogError("test index");
+            
 
             return View();
         }
