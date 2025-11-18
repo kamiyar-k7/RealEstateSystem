@@ -1,3 +1,4 @@
+using Application.Exceptions;
 using EndPoint_MVC.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -15,6 +16,10 @@ namespace EndPoint_MVC.Controllers
 
         public IActionResult Index()
         {
+            
+            throw new InternalException("test message");
+            
+
             return View();
         }
 

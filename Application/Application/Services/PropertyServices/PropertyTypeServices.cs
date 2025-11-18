@@ -1,6 +1,7 @@
 ﻿
 
 using Application.Dtos.PropertyDtos;
+using AutoMapper;
 using Domain.Entities.Property;
 using Domain.IRepository.PropertyIRepsitories;
 
@@ -10,18 +11,20 @@ public class PropertyTypeServices : IPropertyTypeServices
 {
     #region Ctor
 
+    private readonly IMapper _mapper;
     private readonly IPropertyTypeRepository _typeRepository;
 
-    public PropertyTypeServices(IPropertyTypeRepository typeRepository)
+    public PropertyTypeServices(IPropertyTypeRepository typeRepository, IMapper mapper)
     {
         _typeRepository = typeRepository;
+        _mapper = mapper;
     }
 
     #endregion
 
     #region General
 
-    public async Task AddNewPropertyType(PropertyTypeDto typeDto)
+    public async Task AddNewPropertyTypeAsync(PropertyTypeDto typeDto)
     {
 
         PropertyTypeEntity entity = new()
@@ -35,7 +38,7 @@ public class PropertyTypeServices : IPropertyTypeServices
 
     }
 
-    public async Task<PropertyTypeDto> GetPropertyTypeById(Guid id)
+    public async Task<PropertyTypeDto> GetPropertyTypeByIdAsync(Guid id)
     {
 
         var entity = await _typeRepository.GetPropertyTypeByIdAsync(id);
@@ -46,17 +49,10 @@ public class PropertyTypeServices : IPropertyTypeServices
         }
 
 
-        // Use AutoMapper
         PropertyTypeDto dto = new()
         {
             Id = id,
             Name = entity.Name,
-            Properties = entity.Properties.Select(t => new PropertyDto
-            {
-
-                Id = t.Id,
-
-            }).ToList()
 
         };
 
@@ -64,29 +60,17 @@ public class PropertyTypeServices : IPropertyTypeServices
 
     }
 
-    public async Task<List<PropertyTypeDto>> GetListOfPropertyTypes()
+    public async Task<List<PropertyTypeDto>> GetListOfPropertyTypesAsync()
     {
 
         var propertyTypes = await _typeRepository.GetListOFPropertyTypesAsync();
 
-        List<PropertyTypeDto> dtoList = new List<PropertyTypeDto>();
-
-        foreach (var type in propertyTypes)
-        {
-            PropertyTypeDto mappedType = new()
-            {
-                Id = type.Id,
-                Name = type.Name,
-
-            };
-
-            dtoList.Add(mappedType);
-        }
-
-        return dtoList;
+        List<PropertyTypeDto> pTypeDtos = _mapper.Map<List<PropertyTypeDto>>(propertyTypes);
+        
+        return pTypeDtos;
     }
 
-    public async Task UpdatePropertType(PropertyTypeDto typeDto)
+    public async Task UpdatePropertTypeAsync(PropertyTypeDto typeDto)
     {
         PropertyTypeEntity typeEntity = new()
         {
@@ -97,7 +81,7 @@ public class PropertyTypeServices : IPropertyTypeServices
 
     }
 
-    public async Task DeletePropertyType(Guid id)
+    public async Task DeletePropertyTypeAsync(Guid id)
     {
         await _typeRepository.DeletePropertyAsync(id);
 

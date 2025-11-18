@@ -1,5 +1,6 @@
 ﻿
 using Application.Dtos.BlogDtos;
+using AutoMapper;
 using Domain.Entities.Blog;
 using Domain.IRepository.BlogIRepositories;
 
@@ -8,19 +9,21 @@ namespace Application.Services.BlogServices;
 public class BlogCategoryServices : IBlogCategoryServices
 {
 
-	#region Ctor
+    #region Ctor
 
+    private readonly IMapper _mapper;
 	private readonly IBlogCategoryRepository _repository;
 
-    public BlogCategoryServices(IBlogCategoryRepository repository)
+    public BlogCategoryServices(IMapper mapper ,IBlogCategoryRepository repository )
     {
+        _mapper = mapper;
         _repository = repository;
     }
     #endregion
 
     #region General
 
-    public async Task AddNewBlogCategory(BlogCategoryDto categoryDto)
+    public async Task AddNewBlogCategoryAsync(BlogCategoryDto categoryDto)
     {
         BlogCategoryEntity categoryEntity = new()
         {
@@ -31,9 +34,9 @@ public class BlogCategoryServices : IBlogCategoryServices
     }
 
 
-    public async Task<BlogCategoryDto> GetBlogCategoryById(Guid id)
+    public async Task<BlogCategoryDto> GetBlogCategoryByIdAsync(Guid id)
     {
-     var categoryEntity = await _repository.GetBlogCategoryByIdAsync(id);
+     BlogCategoryEntity categoryEntity = await _repository.GetBlogCategoryByIdAsync(id);
         
         if (categoryEntity == null) 
         {
@@ -50,28 +53,19 @@ public class BlogCategoryServices : IBlogCategoryServices
     }
 
 
-    public async Task<List<BlogCategoryDto>> GetListOfBlogCategories()
+    public async Task<List<BlogCategoryDto>> GetListOfBlogCategoriesAsync()
     {
-          var categoryEntities = await _repository.GetListOfBlogCategoriesAsync();
+          List<BlogCategoryEntity> categoryEntities = await _repository.GetListOfBlogCategoriesAsync();
 
-        List<BlogCategoryDto> dtolist = new();
 
-        foreach (var category in categoryEntities)
-        {
+        List<BlogCategoryDto> dto = _mapper.Map<List<BlogCategoryDto>>(categoryEntities);
 
-            BlogCategoryDto mappedCategory = new()
-            {
-                Id=category.Id,
-                Name = category.Name,
-            };
 
-            dtolist.Add(mappedCategory);
-        }
-        return dtolist;
+        return dto;
            
     }
  
-    public async Task UpdateBlogCategory(BlogCategoryDto blogCategory)
+    public async Task UpdateBlogCategoryAsync(BlogCategoryDto blogCategory)
     {
 
         BlogCategoryEntity blogCategoryEntity = new()
@@ -82,7 +76,7 @@ public class BlogCategoryServices : IBlogCategoryServices
         await _repository.UpdateBlogCategoryAsync(blogCategoryEntity);
     }
 
-    public async Task DeleteBlogCategory(Guid id)
+    public async Task DeleteBlogCategoryAsync(Guid id)
     {
         await _repository.DeleteBlogCategoryAsync(id);
     }

@@ -1,9 +1,10 @@
 using Application.Configuration;
+using EndPoint_MVC.MiddleWares;
 using Infrastructure.Configuration;
+using Serilog;
 
 
 var builder = WebApplication.CreateBuilder(args);
-
 
 
 #region Services
@@ -14,10 +15,22 @@ builder.Services.AddApplicationServcies();
 
 #endregion
 
+#region Serilog
+
+var config = builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true).Build();
+
+
+Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(config).CreateLogger();
+
+
+builder.Host.UseSerilog();
+
+
+
+#endregion
+
 
 var app = builder.Build();
-
-
 
 
 
@@ -28,6 +41,10 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+app.UseMiddleware<ExceptionMiddleware>();
+
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

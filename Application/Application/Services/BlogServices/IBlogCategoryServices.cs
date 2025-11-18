@@ -7,13 +7,13 @@ namespace Application.Services.BlogServices;
 
 public interface IBlogCategoryServices
 {
-    Task AddNewBlogCategory(BlogCategoryDto categoryDto);
+    Task AddNewBlogCategoryAsync(BlogCategoryDto categoryDto);
 
-    Task<BlogCategoryDto> GetBlogCategoryById(Guid id);
+    Task<BlogCategoryDto> GetBlogCategoryByIdAsync(Guid id);
 
-    Task<List<BlogCategoryDto>> GetListOfBlogCategories();
+    Task<List<BlogCategoryDto>> GetListOfBlogCategoriesAsync();
 
-    Task UpdateBlogCategory(BlogCategoryDto categoryDto);
+    Task UpdateBlogCategoryAsync(BlogCategoryDto categoryDto);
 
-    Task DeleteBlogCategory(Guid id);
+    Task DeleteBlogCategoryAsync(Guid id);
 }

@@ -8,18 +8,18 @@ namespace Application.Services.BlogServices;
 public interface IBlogServices
 {
 
-    Task<BlogDto> GetBlogById(Guid Id);
+    Task<BlogDto> GetBlogByIdAsync(Guid Id);
 
-    Task<List<BlogDto>> GetListOfBlogs(string search, int pageNumber, int pageSize);
+    Task<List<BlogDto>> GetListOfBlogsAsync(string search, int pageNumber, int pageSize);
 
-    Task AddNewBlog(BlogDto blogDto);
+    Task AddNewBlogAsync(BlogDto blogDto);
 
-    Task UpdateBlog(BlogDto blogDto);
+    Task UpdateBlogAsync(BlogDto blogDto);
 
-    Task DeleteBlog(Guid id);
+    Task DeleteBlogAsync(Guid id);
 
-    Task SoftDeleteBlog(Guid id);
+    Task SoftDeleteBlogAsync(Guid id);
 
-    Task<List<BlogDto>> GetListOfBlogsForAdmin(string search, int pageNumber, int pageSize);
+    Task<List<BlogDto>> GetListOfBlogsForAdminAsync(string search, int pageNumber, int pageSize);
 
 }

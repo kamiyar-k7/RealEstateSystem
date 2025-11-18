@@ -14,7 +14,7 @@ public class RoleServices : IRoleServices
    
     private readonly RoleManager<ApplicationRole> _roleManager;
 
-    public RoleServices(IRoleRepository repository, RoleManager<ApplicationRole> roleManager)
+    public RoleServices( RoleManager<ApplicationRole> roleManager)
     {
      
         _roleManager = roleManager;

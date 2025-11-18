@@ -29,7 +29,26 @@ public class RealEstateDataBaseContext : IdentityDbContext<ApplicationUser, Appl
 
     // blog
     public DbSet<BlogEntity> Blog { get; set; }
-    public DbSet<BlogCategoryEntity> BlogCategory {  get; set; }
+    public DbSet<BlogCategoryEntity> BlogCategory { get; set; }
 
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+       
+        modelBuilder.Entity<PropertyEntity>()
+            .HasOne(p => p.City)
+            .WithMany()
+            .HasForeignKey(p => p.CityId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+     
+        modelBuilder.Entity<PropertyEntity>()
+            .HasOne(p => p.Province)
+            .WithMany()
+            .HasForeignKey(p => p.ProvinceId)
+            .OnDelete(DeleteBehavior.Restrict); 
+    }
 
 }
